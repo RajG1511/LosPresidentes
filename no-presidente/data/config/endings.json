@@ -1,0 +1,10 @@
+{
+  "endings": {
+    "ending_1": { "title": "Ending 1", "hint": "What if you had chosen a different ally?" },
+    "ending_2": { "title": "Ending 2", "hint": "There was another way past those guards..." },
+    "ending_3": { "title": "Ending 3", "hint": "Sometimes brute force isn't the answer." },
+    "ending_4": { "title": "Ending 4", "hint": "Pete remembers those who were kind." },
+    "ending_5": { "title": "Ending 5", "hint": "The president had a weakness you never exploited." },
+    "morale_death": { "title": "Broken Spirit", "hint": "Keep your head up next time. Morale matters." }
+  }
+}

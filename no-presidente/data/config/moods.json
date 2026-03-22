@@ -1,0 +1,39 @@
+{
+  "moods": {
+    "tense": {
+      "terminal_bg": "#1a1a1a",
+      "text_color": "#c0c0c0",
+      "hud_accent": "#8b0000",
+      "audio_track": "tense.mp3",
+      "description": "Guards approaching, interrogation, time pressure"
+    },
+    "hopeful": {
+      "terminal_bg": "#1a1f14",
+      "text_color": "#d4d4aa",
+      "hud_accent": "#c8a642",
+      "audio_track": "hopeful.mp3",
+      "description": "Meeting an ally, finding a clue, safe house"
+    },
+    "dangerous": {
+      "terminal_bg": "#120a1a",
+      "text_color": "#b8a0cc",
+      "hud_accent": "#6a0dad",
+      "audio_track": "dangerous.mp3",
+      "description": "Chase scenes, combat, the drug ring lair"
+    },
+    "mysterious": {
+      "terminal_bg": "#0a1a1a",
+      "text_color": "#a0cccc",
+      "hud_accent": "#008080",
+      "audio_track": "mysterious.mp3",
+      "description": "Discovering secrets, exploring unknown areas"
+    },
+    "triumphant": {
+      "terminal_bg": "#1a1a0a",
+      "text_color": "#ffd700",
+      "hud_accent": "#daa520",
+      "audio_track": "triumphant.mp3",
+      "description": "Victory moments, rescuing Pete, endings"
+    }
+  }
+}

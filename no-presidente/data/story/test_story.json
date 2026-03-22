@@ -1,0 +1,366 @@
+{
+  "nodes": {
+    "start_001": {
+      "node_id": "start_001",
+      "section": "act1",
+      "type": "event",
+      "text": "3:00 AM. You're jolted awake by the sound of helicopters and shattering glass.\n\nYour apartment is ransacked. Pete's tank is empty.\n\nOn the floor, stamped in red wax over a Venezuelan flag: a note.\n\n'El Presidente Maduro Delgado extends his warmest regards. The platypus is now property of the Bolivarian Republic. Do not follow us.'\n\nThey took Pete.",
+      "mood": "tense",
+      "sprite": "pete_missing.png",
+      "choices": [
+        {
+          "label": "Read the note again. Focus.",
+          "next_node": "start_002",
+          "requirements": null,
+          "effects": null,
+          "weight_attribute": null
+        }
+      ]
+    },
+    "start_002": {
+      "node_id": "start_002",
+      "section": "act1",
+      "type": "pathway",
+      "text": "Dawn. You've got three leads:\n\nYour contact Rosa — a CIA-adjacent fixer who owes you a favor — just texted: 'I heard about Pete. Come find me.'\n\nDownstairs, a Venezuelan embassy attaché named Vargas is parked outside. He's been watching your window for an hour. Looks nervous.\n\nYour neighbor Jorge whispers through the wall: 'I filmed the whole thing. The helicopters, the soldiers. Everything. You want the footage?'",
+      "mood": "mysterious",
+      "sprite": "street_morning.png",
+      "choices": [
+        {
+          "label": "Go find Rosa immediately",
+          "next_node": "rosa_001",
+          "requirements": null,
+          "effects": { "rapport": 1, "morale": 1 },
+          "weight_attribute": null
+        },
+        {
+          "label": "Approach Vargas — he knows something",
+          "next_node": "vargas_001",
+          "requirements": null,
+          "effects": { "stealth": -1, "morale": -1 },
+          "weight_attribute": null
+        },
+        {
+          "label": "Get Jorge's footage first — intel is power",
+          "next_node": "jorge_001",
+          "requirements": { "intelligence": 6 },
+          "effects": { "intelligence": 1 },
+          "weight_attribute": null
+        }
+      ]
+    },
+    "rosa_001": {
+      "node_id": "rosa_001",
+      "section": "act1",
+      "type": "pathway",
+      "text": "Rosa meets you in a parking garage, engine running.\n\n'Delgado's been collecting rare animals for his palace zoo for years. But a platypus? That's personal. He's obsessed with them. Thinks they're lucky.'\n\nShe slides you a folder. Flight manifests. Pete was airlifted to Caracas — Palacio El Condor, Delgado's fortified presidential compound.\n\n'I can get you across the border two ways,' she says. 'Diplomatic cover — slow but clean. Or I know a smuggler who can get you in tonight.'",
+      "mood": "hopeful",
+      "sprite": "rosa_garage.png",
+      "choices": [
+        {
+          "label": "Take the diplomatic cover — do this right",
+          "next_node": "diplomatic_route",
+          "requirements": { "rapport": 6 },
+          "effects": { "rapport": 1, "morale": 1 },
+          "weight_attribute": null
+        },
+        {
+          "label": "Take the smuggler route — tonight",
+          "next_node": "smuggler_route",
+          "requirements": null,
+          "effects": { "stealth": 1, "morale": -1 },
+          "weight_attribute": null
+        }
+      ]
+    },
+    "vargas_001": {
+      "node_id": "vargas_001",
+      "section": "act1",
+      "type": "attribute",
+      "text": "You walk straight up to Vargas's car and knock on the window.\n\nHe startles. Up close he looks terrified, not threatening.\n\n'Please,' he says. 'I was ordered to watch you. To make sure you don't follow. But this is wrong. Delgado has gone too far.'\n\nHe could be genuine. He could be bait.",
+      "mood": "tense",
+      "sprite": "vargas_car.png",
+      "choices": [
+        {
+          "label": "Read him — is he telling the truth?",
+          "next_node": "vargas_trust",
+          "fail_node": "vargas_trap",
+          "requirements": null,
+          "effects": { "intelligence": 1 },
+          "weight_attribute": "intelligence",
+          "threshold": 5
+        },
+        {
+          "label": "Intimidate him into talking",
+          "next_node": "vargas_trust",
+          "fail_node": "vargas_trap",
+          "requirements": null,
+          "effects": { "strength": 1, "rapport": -1 },
+          "weight_attribute": "strength",
+          "threshold": 6
+        },
+        {
+          "label": "Play it smooth — befriend him",
+          "next_node": "vargas_trust",
+          "fail_node": "vargas_trap",
+          "requirements": null,
+          "effects": { "rapport": 1 },
+          "weight_attribute": "rapport",
+          "threshold": 5
+        }
+      ]
+    },
+    "vargas_trust": {
+      "node_id": "vargas_trust",
+      "section": "act1",
+      "type": "checkpoint",
+      "text": "Vargas exhales. He's for real.\n\n'Delgado keeps Pete in a private wing of the Palacio El Condor. Third floor, east tower. There is a guard rotation every 40 minutes. I can get you a staff ID badge.'\n\nHe hands you a laminated card. Blurry photo, wrong name, perfect.\n\n'One more thing,' he says. 'There is a woman inside — Dr. Carmen Vega, the palace veterinarian. She refuses to leave Pete unattended. Find her. She will help you.'",
+      "mood": "hopeful",
+      "sprite": "vargas_trust.png",
+      "choices": [
+        {
+          "label": "Take the badge. Head to Venezuela.",
+          "next_node": "palace_gates",
+          "requirements": null,
+          "effects": { "morale": 2, "stealth": 1 },
+          "weight_attribute": null
+        }
+      ]
+    },
+    "vargas_trap": {
+      "node_id": "vargas_trap",
+      "section": "act1",
+      "type": "event",
+      "text": "Your instincts were wrong — or your approach was.\n\nTwo soldiers materialize from a van across the street. Vargas was wired the whole time.\n\nYou run. You lose them in the subway, but you've burned this lead and cost yourself precious hours.\n\nYou regroup at a coffee shop, hands shaking around a cortado. Time to find someone else.",
+      "mood": "dangerous",
+      "sprite": "alley_escape.png",
+      "choices": [
+        {
+          "label": "Call Rosa — she's the only option left",
+          "next_node": "rosa_001",
+          "requirements": null,
+          "effects": { "morale": -2, "stealth": -1 },
+          "weight_attribute": null
+        }
+      ]
+    },
+    "jorge_001": {
+      "node_id": "jorge_001",
+      "section": "act1",
+      "type": "event",
+      "text": "Jorge's footage is gold.\n\nHD. Timestamps. You can clearly read the tail number of the helicopter — a Venezuelan Air Force transport, callsign CONDOR-7.\n\nMore importantly: in the background, you catch a face. Dr. Carmen Vega, Delgado's palace veterinarian, arguing with the soldiers. She didn't want Pete taken. She's an ally on the inside.\n\nYou now know Pete is at Palacio El Condor, you know the guard callsigns, and you have a contact.",
+      "mood": "mysterious",
+      "sprite": "jorge_footage.png",
+      "choices": [
+        {
+          "label": "Take the footage to Rosa — she'll know what to do with it",
+          "next_node": "rosa_intel_boost",
+          "requirements": null,
+          "effects": { "intelligence": 2, "morale": 2 },
+          "weight_attribute": null
+        }
+      ]
+    },
+    "rosa_intel_boost": {
+      "node_id": "rosa_intel_boost",
+      "section": "act1",
+      "type": "checkpoint",
+      "text": "Rosa watches the footage twice.\n\n'CONDOR-7. That's a direct palace flight.' She pulls up a satellite image on her laptop. Palacio El Condor. East tower, third floor.\n\n'And Carmen Vega — I know her. She's been trying to get out for two years. She'll help you.'\n\nRosa hands you two options: a diplomatic visa, or a staff ID badge she can forge using the footage's metadata to make it airtight.",
+      "mood": "hopeful",
+      "sprite": "rosa_laptop.png",
+      "choices": [
+        {
+          "label": "Take the diplomatic visa route",
+          "next_node": "diplomatic_route",
+          "requirements": null,
+          "effects": { "rapport": 1 },
+          "weight_attribute": null
+        },
+        {
+          "label": "Take the forged staff badge — go tonight",
+          "next_node": "smuggler_route",
+          "requirements": null,
+          "effects": { "stealth": 2 },
+          "weight_attribute": null
+        }
+      ]
+    },
+    "diplomatic_route": {
+      "node_id": "diplomatic_route",
+      "section": "act2",
+      "type": "event",
+      "text": "Forty-eight hours later you're standing in line at the Venezuelan consulate in a rented suit, carrying forged credentials identifying you as Dr. Alejandro Rios, ornithological researcher.\n\nThe consul officer squints at your paperwork. Then at you. Then at the paperwork again.\n\nThis is the moment.",
+      "mood": "tense",
+      "sprite": "consulate_line.png",
+      "choices": [
+        {
+          "label": "Smile and stay confident — you ARE Dr. Rios",
+          "next_node": "palace_gates",
+          "fail_node": "border_caught",
+          "requirements": null,
+          "effects": { "rapport": 1 },
+          "weight_attribute": "rapport",
+          "threshold": 6
+        },
+        {
+          "label": "Distract him with a technical question about bird taxonomy",
+          "next_node": "palace_gates",
+          "fail_node": "border_caught",
+          "requirements": { "intelligence": 7 },
+          "effects": { "intelligence": 1 },
+          "weight_attribute": null
+        }
+      ]
+    },
+    "smuggler_route": {
+      "node_id": "smuggler_route",
+      "section": "act2",
+      "type": "attribute",
+      "text": "The smuggler is a wiry woman named Paloma who operates out of a fishing boat.\n\n'Three hours on the water. Then a fifteen-minute window at a blind spot in the coastal patrol route. You go in through the storm drain network under the palace district.'\n\nShe looks you up and down. 'You've done something like this before, yes?'",
+      "mood": "dangerous",
+      "sprite": "smuggler_boat.png",
+      "choices": [
+        {
+          "label": "Trust your instincts and go",
+          "next_node": "palace_gates",
+          "fail_node": "border_caught",
+          "requirements": null,
+          "effects": { "stealth": 1 },
+          "weight_attribute": "stealth",
+          "threshold": 5
+        },
+        {
+          "label": "Brace yourself physically — this will be rough",
+          "next_node": "palace_gates",
+          "fail_node": "border_caught",
+          "requirements": { "strength": 6 },
+          "effects": { "strength": 1, "morale": -1 },
+          "weight_attribute": null
+        }
+      ]
+    },
+    "border_caught": {
+      "node_id": "border_caught",
+      "section": "act2",
+      "type": "event",
+      "text": "You're detained.\n\nSix hours in a white room with a flickering light. They don't charge you with anything — they don't have to. They just let you sit.\n\nFinally, a bored officer stamps EXPELLED in your passport and drives you to the airport.\n\nYou're back to square one — but you're not giving up on Pete.",
+      "mood": "tense",
+      "sprite": "detention_room.png",
+      "choices": [
+        {
+          "label": "Regroup. Find another way in.",
+          "next_node": "smuggler_route",
+          "requirements": null,
+          "effects": { "morale": -3, "stealth": 1 },
+          "weight_attribute": null
+        }
+      ]
+    },
+    "palace_gates": {
+      "node_id": "palace_gates",
+      "section": "act2",
+      "type": "checkpoint",
+      "text": "You're inside Venezuela. Inside Caracas. Standing 200 meters from the gates of Palacio El Condor.\n\nThe compound is enormous — whitewashed walls, armed guards at every entrance, surveillance cameras on every corner. Somewhere in there, Pete is alive.\n\nYou spot Dr. Carmen Vega slipping out a side entrance for what looks like a smoke break. This is your chance to make contact.",
+      "mood": "mysterious",
+      "sprite": "palace_exterior.png",
+      "choices": [
+        {
+          "label": "Approach Carmen directly — introduce yourself",
+          "next_node": "carmen_meet",
+          "requirements": null,
+          "effects": { "rapport": 1 },
+          "weight_attribute": null
+        },
+        {
+          "label": "Leave a message — slip a note into her coat pocket",
+          "next_node": "carmen_meet",
+          "requirements": { "stealth": 6 },
+          "effects": { "stealth": 1, "morale": 1 },
+          "weight_attribute": null
+        }
+      ]
+    },
+    "carmen_meet": {
+      "node_id": "carmen_meet",
+      "section": "act2",
+      "type": "pathway",
+      "text": "Dr. Vega doesn't flinch when you mention Pete.\n\n'I've been waiting for someone to come,' she says quietly. 'Delgado shows Pete off at his Friday banquets. He carries him around like a trophy. It's degrading.' She pauses. 'For the platypus.'\n\nShe draws you a mental map. Three ways to reach Pete — each depends on what you're good at.",
+      "mood": "hopeful",
+      "sprite": "carmen_courtyard.png",
+      "choices": [
+        {
+          "label": "Crash the Friday banquet — become a guest",
+          "next_node": "finale_social",
+          "requirements": { "rapport": 7 },
+          "effects": null,
+          "weight_attribute": null
+        },
+        {
+          "label": "Go in through the service tunnels at midnight",
+          "next_node": "finale_stealth",
+          "requirements": null,
+          "effects": { "stealth": 1 },
+          "weight_attribute": "stealth",
+          "threshold": 5,
+          "fail_node": "finale_caught"
+        },
+        {
+          "label": "Confront Delgado directly — challenge him",
+          "next_node": "finale_confrontation",
+          "requirements": { "strength": 7 },
+          "effects": { "strength": 1, "morale": -1 },
+          "weight_attribute": null
+        }
+      ]
+    },
+    "finale_social": {
+      "node_id": "finale_social",
+      "section": "act3",
+      "type": "ending",
+      "text": "Friday evening. You walk into El Presidente Delgado's banquet hall in a borrowed tuxedo, armed with a glass of champagne and thirty years of accumulated charisma.\n\nDelgado himself is holding Pete, showing him to a room full of diplomats. Pete looks miserable.\n\nYou introduce yourself as a rare animal specialist from the Smithsonian. Within twenty minutes Delgado is convinced Pete has a dangerous fungal infection that will spread to his entire zoo.\n\nDelgado hands you Pete personally, requesting 'treatment.'\n\nYou walk out the front door.\n\nPete bites your thumb the whole ride home. You've never been happier.\n\n>>> ENDING 1: THE DIPLOMAT",
+      "mood": "triumphant",
+      "ending_id": "ending_1",
+      "sprite": "ending_diplomat.png",
+      "choices": []
+    },
+    "finale_stealth": {
+      "node_id": "finale_stealth",
+      "section": "act3",
+      "type": "ending",
+      "text": "Midnight. Carmen's map is perfect.\n\nService tunnel. Boiler room. East stairwell. Third floor.\n\nYou find Pete's enclosure — custom-built, temperature-controlled, clearly expensive. Delgado loves Pete in his own demented way. That doesn't matter right now.\n\nPete sees you. He doesn't make a sound. Smart platypus.\n\nYou carry him out the same way you came in. By the time anyone notices, you're across the border.\n\nPete sleeps on your lap the entire flight home.\n\n>>> ENDING 2: THE GHOST",
+      "mood": "triumphant",
+      "ending_id": "ending_2",
+      "sprite": "ending_ghost.png",
+      "choices": []
+    },
+    "finale_caught": {
+      "node_id": "finale_caught",
+      "section": "act3",
+      "type": "ending",
+      "text": "A guard's flashlight finds you in the tunnel.\n\nThere's a brief, undignified chase. You make it three floors before soldiers have you surrounded.\n\nDelgado appears personally. He's in a bathrobe. He looks at you for a long time.\n\n'You came all this way for a platypus?'\n\n'Yes,' you say.\n\nHe seems genuinely moved. But he still has you deported.\n\nPete remains in Caracas. For now.\n\n>>> ENDING 3: SO CLOSE",
+      "mood": "tense",
+      "ending_id": "ending_3",
+      "sprite": "ending_caught.png",
+      "choices": []
+    },
+    "finale_confrontation": {
+      "node_id": "finale_confrontation",
+      "section": "act3",
+      "type": "ending",
+      "text": "You find El Presidente Delgado in his private garden at dawn.\n\nHe is alone, feeding Pete strawberries.\n\nYou step out from behind a topiary shaped like a condor.\n\n'Give me back my platypus.'\n\nDelgado turns slowly. He takes in the situation. He looks at Pete. He looks at you.\n\nThen, surprisingly, he laughs.\n\n'You know what? Fine. He bites me anyway.'\n\nHe hands Pete over. You walk out through the front gate. No one stops you because no one believes what just happened.\n\nPete immediately tries to bite you too. It's perfect.\n\n>>> ENDING 4: THE STANDOFF",
+      "mood": "triumphant",
+      "ending_id": "ending_4",
+      "sprite": "ending_standoff.png",
+      "choices": []
+    },
+    "morale_death": {
+      "node_id": "morale_death",
+      "section": "system",
+      "type": "ending",
+      "text": "You stop moving.\n\nSomewhere between the safe houses and the border checkpoints and the cold rooms and the dead ends, something inside you gave out.\n\nPete is still in Caracas. Delgado is still in power.\n\nYou sit on a curb in a city that doesn't know your name and stare at your hands for a very long time.\n\nMaybe tomorrow.\n\n>>> ENDING: BROKEN SPIRIT",
+      "mood": "tense",
+      "ending_id": "morale_death",
+      "sprite": "ending_broken.png",
+      "choices": []
+    }
+  }
+}

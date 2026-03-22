@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>¡No Presidente!</title>
+  <link rel="stylesheet" href="/css/terminal.css" />
+</head>
+<body>
+
+  <!-- Visual Panel -->
+  <div id="visual-panel">
+    <div id="sprite-container"></div>
+    <div id="visual-overlay"></div>
+    <div id="title-block">
+      <div id="game-title">¡NO PRESIDENTE!</div>
+      <div id="game-subtitle">RESCUE PETE. TOPPLE THE REGIME.</div>
+    </div>
+    <div id="mood-badge">TENSE</div>
+  </div>
+
+  <!-- Terminal Panel -->
+  <div id="terminal-panel">
+    <div id="crt-scanlines"></div>
+    <div id="crt-vignette"></div>
+    <div id="node-tag"></div>
+    <div id="terminal-output"></div>
+    <div id="rng-display"></div>
+    <div id="changes-display"></div>
+    <div id="choices-container"></div>
+    <div id="loading-indicator" style="display:none;"><span class="blink">_</span></div>
+  </div>
+
+  <!-- HUD Bar -->
+  <div id="hud-bar">
+    <div id="hud-attributes"></div>
+    <div id="hud-controls">
+      <button id="btn-mute" title="Toggle Mute">SFX</button>
+      <button id="btn-settings" title="Settings">CFG</button>
+      <button id="btn-restart" title="Restart">RST</button>
+    </div>
+  </div>
+
+  <!-- Settings Modal -->
+  <div id="settings-modal" style="display:none;">
+    <div id="settings-panel">
+      <h2>&gt; SETTINGS</h2>
+
+      <div class="settings-row">
+        <span class="settings-label">TEXT SPEED</span>
+        <div class="speed-options">
+          <button class="speed-btn" data-speed="60">SLOW</button>
+          <button class="speed-btn active" data-speed="28">NORMAL</button>
+          <button class="speed-btn" data-speed="10">FAST</button>
+          <button class="speed-btn" data-speed="0">INSTANT</button>
+        </div>
+      </div>
+
+      <div class="settings-row">
+        <span class="settings-label">VOLUME</span>
+        <input type="range" class="pixel-slider" id="volume-slider" min="0" max="100" value="60" />
+      </div>
+
+      <div class="settings-row">
+        <div class="toggle-row">
+          <span class="settings-label" style="margin-bottom:0;">SCANLINES</span>
+          <label class="pixel-toggle">
+            <input type="checkbox" id="toggle-scanlines" checked />
+            <div class="pixel-toggle-track"></div>
+            <div class="pixel-toggle-thumb"></div>
+          </label>
+        </div>
+      </div>
+
+      <div class="settings-row">
+        <div class="toggle-row">
+          <span class="settings-label" style="margin-bottom:0;">VIGNETTE</span>
+          <label class="pixel-toggle">
+            <input type="checkbox" id="toggle-vignette" checked />
+            <div class="pixel-toggle-track"></div>
+            <div class="pixel-toggle-thumb"></div>
+          </label>
+        </div>
+      </div>
+
+      <button id="btn-close-settings">&gt; CLOSE</button>
+    </div>
+  </div>
+
+  <!-- Ending Screen -->
+  <div id="ending-screen" style="display:none;">
+    <div id="ending-content">
+      <div id="ending-text"></div>
+      <div id="endings-tracker"></div>
+      <button id="btn-play-again">&gt; PLAY AGAIN</button>
+    </div>
+  </div>
+
+  <!-- Howler.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.min.js"></script>
+
+  <!-- Game Scripts -->
+  <script src="/js/terminal.js"></script>
+  <script src="/js/hud.js"></script>
+  <script src="/js/visuals.js"></script>
+  <script src="/js/audio.js"></script>
+  <script src="/js/game.js"></script>
+</body>
+</html>

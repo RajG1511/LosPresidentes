@@ -1,0 +1,52 @@
+{
+  "attributes": {
+    "rapport": {
+      "display_name": "Rapport",
+      "description": "Social influence — persuasion, lying, negotiation",
+      "default": 5,
+      "min": 1,
+      "max": 10
+    },
+    "stealth": {
+      "display_name": "Stealth",
+      "description": "Ability to avoid detection — sneaking, hiding, pickpocketing",
+      "default": 5,
+      "min": 1,
+      "max": 10
+    },
+    "intelligence": {
+      "display_name": "Intelligence",
+      "description": "Observation and deduction — using info to make better choices",
+      "default": 5,
+      "min": 1,
+      "max": 10
+    },
+    "strength": {
+      "display_name": "Strength",
+      "description": "Physical capability — force, endurance, overpowering",
+      "default": 5,
+      "min": 1,
+      "max": 10
+    },
+    "morale": {
+      "display_name": "Morale",
+      "description": "Mental resilience — drops on setbacks, rises on wins. Hits 0 = game over.",
+      "default": 8,
+      "min": 0,
+      "max": 10
+    }
+  },
+  "rng": {
+    "base_chance": 35,
+    "per_point_modifier": 10,
+    "min_chance": 10,
+    "max_chance": 95,
+    "default_threshold": 5
+  },
+  "balance_rules": {
+    "max_single_effect": 3,
+    "max_requirement": 8,
+    "min_morale_recovery_per_route": 2,
+    "min_morale_drain_per_route": 2
+  }
+}
