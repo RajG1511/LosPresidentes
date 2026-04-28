@@ -28,6 +28,9 @@ const Game = (() => {
     // 2. Init audio
     AudioManager.init();
 
+    // 2b. Init Robin companion
+    RobinPanel.init();
+
     // 3. Wire UI controls
     _wireControls();
 
@@ -201,6 +204,9 @@ const Game = (() => {
       HUD.flashMoraleDeath();
       await new Promise(r => setTimeout(r, 400));
     }
+
+    // Keep Robin's context in sync with the current scene
+    RobinPanel.updateContext(node, player);
 
     // Type node text
     await Terminal.typeText(Terminal.outputEl, node.text);

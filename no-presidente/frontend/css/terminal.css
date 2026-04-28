@@ -806,6 +806,350 @@ body { display: flex; flex-direction: column; }
   }
 }
 
+/* ── Robin AI Companion Panel ────────────────────────────────────────────── */
+
+/* Robin uses its own color palette independent of the mood system */
+:root {
+  --robin-bg:        #0a160a;
+  --robin-panel-bg:  #0d1a0d;
+  --robin-border:    #3d8c3d;
+  --robin-accent:    #5ab85a;
+  --robin-text:      #c2e0c2;
+  --robin-label:     #7ec87e;
+  --robin-player-bg: rgba(90, 184, 90, 0.08);
+  --robin-robin-bg:  rgba(0, 0, 0, 0.25);
+  --robin-input-bg:  #0a120a;
+}
+
+#robin-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.88);
+  z-index: 350;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+#robin-panel {
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  max-width: 96vw;
+  max-height: 82vh;
+  background: var(--robin-panel-bg);
+  border: 3px solid var(--robin-border);
+  box-shadow: 6px 6px 0 var(--robin-border), 12px 12px 0 rgba(0, 0, 0, 0.45);
+  font-family: 'IBM Plex Mono', monospace;
+  color: var(--robin-text);
+}
+
+/* ── Robin Header ─────────────────────────────────────────────────────────── */
+
+#robin-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  border-bottom: 2px solid var(--robin-border);
+  background: rgba(0, 0, 0, 0.35);
+  flex-shrink: 0;
+}
+
+#robin-sprite-wrapper {
+  flex-shrink: 0;
+  width: 96px;
+  height: 96px;
+  border: 2px solid var(--robin-border);
+  background: #040a04;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  image-rendering: pixelated;
+}
+
+#robin-sprite-anim {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  flex-shrink: 0;
+}
+
+#robin-header-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+#robin-name-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#robin-name-display {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.72rem;
+  color: var(--robin-accent);
+  text-shadow: 2px 2px 0 #000;
+  letter-spacing: 0.04em;
+}
+
+#robin-rename-btn {
+  background: transparent;
+  border: 1px solid rgba(90, 184, 90, 0.3);
+  color: rgba(90, 184, 90, 0.6);
+  font-size: 0.75rem;
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  line-height: 1;
+  transition: color 0.1s, border-color 0.1s;
+}
+
+#robin-rename-btn:hover {
+  color: var(--robin-accent);
+  border-color: var(--robin-accent);
+}
+
+#robin-name-edit-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+#robin-name-input {
+  background: var(--robin-input-bg);
+  border: 2px solid var(--robin-border);
+  color: var(--robin-text);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.82rem;
+  padding: 4px 8px;
+  border-radius: 0;
+  outline: none;
+  flex: 1;
+}
+
+#robin-name-input:focus { border-color: var(--robin-accent); }
+
+#robin-name-save {
+  background: var(--robin-border);
+  border: 2px solid var(--robin-border);
+  color: #000;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.42rem;
+  padding: 5px 8px;
+  cursor: pointer;
+  border-radius: 0;
+  white-space: nowrap;
+}
+
+#robin-name-save:hover { background: var(--robin-accent); border-color: var(--robin-accent); }
+
+#robin-subtitle {
+  font-size: 0.7rem;
+  color: rgba(194, 224, 194, 0.4);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+#robin-close-btn {
+  background: transparent;
+  border: 2px solid rgba(90, 184, 90, 0.3);
+  color: rgba(90, 184, 90, 0.55);
+  font-size: 1.1rem;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: color 0.1s, border-color 0.1s, background 0.1s;
+  align-self: flex-start;
+}
+
+#robin-close-btn:hover {
+  color: #fff;
+  border-color: var(--robin-accent);
+  background: rgba(90, 184, 90, 0.12);
+}
+
+/* ── Chat History ─────────────────────────────────────────────────────────── */
+
+#robin-chat-history {
+  flex: 1;
+  overflow-y: auto;
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 0;
+  scrollbar-width: thin;
+  scrollbar-color: var(--robin-border) #040a04;
+}
+
+#robin-chat-history::-webkit-scrollbar { width: 5px; }
+#robin-chat-history::-webkit-scrollbar-track { background: #040a04; }
+#robin-chat-history::-webkit-scrollbar-thumb { background: var(--robin-border); }
+
+.robin-msg {
+  font-size: 0.84rem;
+  line-height: 1.65;
+  padding: 9px 13px;
+  border-left: 3px solid transparent;
+  word-break: break-word;
+}
+
+.robin-msg-robin {
+  background: var(--robin-robin-bg);
+  border-left-color: var(--robin-accent);
+}
+
+.robin-msg-player {
+  background: var(--robin-player-bg);
+  border-left-color: rgba(90, 184, 90, 0.35);
+  margin-left: 24px;
+}
+
+.robin-msg-label {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.45rem;
+  color: var(--robin-label);
+  display: block;
+  margin-bottom: 5px;
+  letter-spacing: 0.06em;
+}
+
+.robin-msg-text {
+  color: var(--robin-text);
+}
+
+/* ── Thinking Indicator ───────────────────────────────────────────────────── */
+
+#robin-thinking {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 18px;
+  border-top: 1px solid rgba(61, 140, 61, 0.2);
+  flex-shrink: 0;
+}
+
+#robin-thinking-label {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.42rem;
+  color: rgba(90, 184, 90, 0.5);
+  letter-spacing: 0.1em;
+}
+
+/* ── Input Row ────────────────────────────────────────────────────────────── */
+
+#robin-input-row {
+  display: flex;
+  gap: 0;
+  border-top: 2px solid var(--robin-border);
+  flex-shrink: 0;
+}
+
+#robin-input {
+  flex: 1;
+  background: var(--robin-input-bg);
+  border: none;
+  border-right: 2px solid var(--robin-border);
+  color: var(--robin-text);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.86rem;
+  padding: 12px 16px;
+  outline: none;
+  caret-color: var(--robin-accent);
+}
+
+#robin-input::placeholder { color: rgba(194, 224, 194, 0.25); }
+#robin-input:focus { background: #0d1a0d; }
+#robin-input:disabled { opacity: 0.4; }
+
+#robin-send-btn {
+  background: transparent;
+  border: none;
+  color: var(--robin-accent);
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.45rem;
+  padding: 0 18px;
+  cursor: pointer;
+  letter-spacing: 0.08em;
+  flex-shrink: 0;
+  transition: background 0.1s, color 0.1s;
+}
+
+#robin-send-btn:hover { background: rgba(90, 184, 90, 0.12); color: #fff; }
+#robin-send-btn:active { transform: translateY(1px); }
+#robin-send-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+/* ── Footer ───────────────────────────────────────────────────────────────── */
+
+#robin-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 6px 12px;
+  border-top: 1px solid rgba(61, 140, 61, 0.18);
+  flex-shrink: 0;
+}
+
+#robin-clear-btn {
+  background: transparent;
+  border: 1px solid rgba(90, 184, 90, 0.2);
+  color: rgba(90, 184, 90, 0.35);
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.38rem;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 0;
+  letter-spacing: 0.06em;
+  transition: color 0.1s, border-color 0.1s;
+}
+
+#robin-clear-btn:hover { color: #ff7777; border-color: #ff7777; }
+
+/* ── Robin HUD Button ─────────────────────────────────────────────────────── */
+
+#btn-robin {
+  color: var(--robin-accent) !important;
+  border-color: rgba(90, 184, 90, 0.35) !important;
+}
+
+#btn-robin:hover {
+  color: #fff !important;
+  border-color: var(--robin-accent) !important;
+  background: rgba(90, 184, 90, 0.12) !important;
+}
+
+/* ── Responsive ───────────────────────────────────────────────────────────── */
+
+@media (max-width: 540px) {
+  #robin-panel {
+    max-height: 90vh;
+  }
+
+  #robin-sprite-wrapper {
+    width: 64px;
+    height: 64px;
+  }
+
+  #robin-name-display {
+    font-size: 0.6rem;
+  }
+}
+
 /* ── Scene Image Hard Override / Debug Fix ─────────────────────────────── */
 
 #visual-panel {
