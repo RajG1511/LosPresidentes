@@ -7,3 +7,9 @@ env/
 __pycache__/
 *.py[cod]
 .pytest_cache/
+
+# Environment variables / secrets — never commit these
+.env
+.env.*
+*.env
+secrets.json

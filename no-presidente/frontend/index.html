@@ -35,6 +35,7 @@
   <div id="hud-bar">
     <div id="hud-attributes"></div>
     <div id="hud-controls">
+      <button id="btn-robin" title="Talk to Robin">RBN</button>
       <button id="btn-mute" title="Toggle Mute">SFX</button>
       <button id="btn-settings" title="Settings">CFG</button>
       <button id="btn-restart" title="Restart">RST</button>
@@ -87,6 +88,54 @@
     </div>
   </div>
 
+  <!-- Robin AI Companion Modal -->
+  <div id="robin-modal" style="display:none;">
+    <div id="robin-panel">
+
+      <!-- Header: sprite + name + close -->
+      <div id="robin-header">
+        <div id="robin-sprite-wrapper">
+          <div id="robin-sprite-anim"></div>
+        </div>
+
+        <div id="robin-header-info">
+          <div id="robin-name-row">
+            <span id="robin-name-display">Robin</span>
+            <button id="robin-rename-btn" title="Rename Robin">✎</button>
+          </div>
+          <div id="robin-name-edit-row" style="display:none;">
+            <input type="text" id="robin-name-input" maxlength="20" placeholder="Name your bird..." />
+            <button id="robin-name-save">OK</button>
+          </div>
+          <div id="robin-subtitle">Spirit Guide &middot; Field Operative</div>
+        </div>
+
+        <button id="robin-close-btn" title="Close">&times;</button>
+      </div>
+
+      <!-- Chat history -->
+      <div id="robin-chat-history"></div>
+
+      <!-- Thinking indicator -->
+      <div id="robin-thinking" style="display:none;">
+        <span id="robin-thinking-label">thinking</span><span class="blink">_</span>
+      </div>
+
+      <!-- Input row -->
+      <div id="robin-input-row">
+        <input type="text" id="robin-input" maxlength="300"
+               placeholder="Ask Robin anything..." autocomplete="off" />
+        <button id="robin-send-btn">SEND</button>
+      </div>
+
+      <!-- Footer -->
+      <div id="robin-footer">
+        <button id="robin-clear-btn">CLEAR CHAT</button>
+      </div>
+
+    </div>
+  </div>
+
   <!-- Ending Screen -->
   <div id="ending-screen" style="display:none;">
     <div id="ending-content">
@@ -104,6 +153,7 @@
   <script src="/js/hud.js"></script>
   <script src="/js/visuals.js"></script>
   <script src="/js/audio.js"></script>
+  <script src="/js/robin.js"></script>
   <script src="/js/game.js"></script>
 </body>
 </html>

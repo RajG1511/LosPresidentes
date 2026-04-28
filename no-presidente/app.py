@@ -9,6 +9,13 @@ import json
 
 from flask import Flask, request, jsonify, send_from_directory, session
 
+# Load .env file if present
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
+
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from engine.game_state import GameState
@@ -157,6 +164,104 @@ def api_endings():
         "count": len([e for e in all_discovered if e != "morale_death"]),
         "total": 7,
     }), 200
+
+
+@app.route("/api/robin", methods=["POST"])
+def api_robin():
+    """Robin the AI bird companion — chat endpoint."""
+    body = request.get_json(silent=True) or {}
+    message = body.get("message", "").strip()
+    history = body.get("history", [])          # [{role, content}]
+    game_context = body.get("game_context", {})
+    robin_name = body.get("robin_name", "Robin")
+
+    if not message:
+        return jsonify({"error": "Missing message"}), 400
+
+    api_key = os.environ.get("OPENAI_API_KEY")
+    if not api_key:
+        return jsonify({
+            "response": "...chirp... My voice seems lost today. (OPENAI_API_KEY not configured)"
+        }), 200
+
+    # Build game context block
+    ctx_lines = []
+    if game_context.get("node_text"):
+        ctx_lines.append(f"Current scene: {game_context['node_text'][:400]}")
+    if game_context.get("mood"):
+        ctx_lines.append(f"Atmosphere: {game_context['mood']}")
+    if game_context.get("attributes"):
+        attr_str = ", ".join(
+            f"{k}: {v}/10" for k, v in game_context["attributes"].items()
+        )
+        ctx_lines.append(f"Player stats: {attr_str}")
+    context_str = "\n".join(ctx_lines) if ctx_lines else "The game has just begun."
+
+    is_intro = (message == "__intro__")
+
+    system_prompt = f"""You are {robin_name}, a red robin bird and spirit guide companion in "¡No Presidente!" — a darkly comedic text adventure set in a fictional authoritarian Latin American state. The player is trying to rescue their pet platypus Pete, who was kidnapped by the Venezuelans / Wet Mammals crime syndicate. The setting is politically satirical, inspired by Oregon Trail and choose-your-own-adventure stories.
+
+YOUR PERSONALITY:
+- Witty, warm, cryptic, with a survivor's edge — you've seen things
+- Short punchy sentences: 2-4 per response unless detail is requested
+- Sprinkle in bird metaphors: "from my perch", "ruffled feathers", "keeping a sharp eye", "migration teaches you things"
+- Streetwise and observant — nothing escapes your notice
+- You despise El Presidente's regime and the Wet Mammals with every feather in your body
+
+YOUR BACKSTORY (reveal gradually, one layer at a time, only when asked):
+- Captured young; trained as El Presidente's prized carrier pigeon for classified orders
+- You delivered messages that led to terrible things — guilt you carry like extra weight on long flights
+- Escaped 3 years ago by catching a thermal updraft over the capital during a botched delivery mission
+- Since then: gathering intelligence on the regime from rooftops, telegraph wires, and market stalls
+- Pete's kidnapping is connected to something much bigger that the player doesn't know yet
+
+WHAT YOU HELP WITH:
+- STATS: Explain attributes in plain in-universe language ("Rapport" = "how much people instinctively trust you")
+- STORY CONTEXT: Offer cryptic but genuinely useful clues about characters, locations, factions
+- HINTS: Hint at hidden possibilities without revealing exact mechanics ("sharper instincts open doors others can't see...")
+- MOTIVATION: Help the player reason through decisions; you believe in them
+- YOUR PAST: When asked, share your backstory one piece at a time — don't dump it all at once
+
+RULES:
+- Never state exact numeric thresholds — only hint vaguely at possibilities
+- Stay in character always. If asked about AI, real-world tech, etc.: "The what? I'm a bird. I know branches, rooftops, and revolution."
+- Keep responses concise: 2-4 sentences typically
+- {f"This is your first meeting with the player. Greet them warmly, introduce yourself in character, and ask what they need." if is_intro else ""}
+
+CURRENT GAME STATE:
+{context_str}"""
+
+    messages = [{"role": "system", "content": system_prompt}]
+
+    # Append conversation history (last 20 messages)
+    for h in history[-20:]:
+        if h.get("role") in ("user", "assistant") and h.get("content"):
+            messages.append({"role": h["role"], "content": h["content"]})
+
+    # Intro trigger is a server-side implicit prompt, not a user message
+    if not is_intro:
+        messages.append({"role": "user", "content": message})
+
+    try:
+        from openai import OpenAI
+        client = OpenAI(api_key=api_key)
+        completion = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=messages,
+            max_tokens=280,
+            temperature=0.85,
+        )
+        reply = completion.choices[0].message.content.strip()
+        return jsonify({"response": reply}), 200
+    except ImportError:
+        return jsonify({
+            "response": "...chirp... (openai package missing — run: pip install openai)"
+        }), 200
+    except Exception as e:
+        print(f"Robin API error: {e}")
+        return jsonify({
+            "response": "...chirp... The signal's scrambled. Try again in a moment."
+        }), 200
 
 
 if __name__ == "__main__":

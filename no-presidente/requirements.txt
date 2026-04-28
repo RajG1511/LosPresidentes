@@ -3,3 +3,5 @@ colorama
 networkx
 matplotlib
 pytest
+openai
+python-dotenv
