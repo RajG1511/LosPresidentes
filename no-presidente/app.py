@@ -155,7 +155,7 @@ def api_endings():
         "discovered": all_discovered,
         "all_endings": all_endings,
         "count": len([e for e in all_discovered if e != "morale_death"]),
-        "total": 5,
+        "total": 7,
     }), 200
 
 

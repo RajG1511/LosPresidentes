@@ -95,7 +95,7 @@ const Terminal = (() => {
       if (choice.has_rng) {
         const rngTag = document.createElement("span");
         rngTag.className = "choice-rng-tag";
-        rngTag.textContent = `[ROLL: ${choice.weight_attribute.toUpperCase()}]`;
+        rngTag.textContent = `[ROLL]`;
         btn.appendChild(rngTag);
       }
 
@@ -172,15 +172,14 @@ const Terminal = (() => {
     const el = document.getElementById("rng-display");
     if (!el) return;
 
-    const { attribute, chance, roll, player_value, threshold, success } = rng;
-    const attrUpper = attribute.toUpperCase();
+    const { chance, roll, success } = rng;
     const resultClass = success ? "rng-success" : "rng-fail";
     const resultText = success ? "> SUCCESS" : "> FAILED";
 
     el.innerHTML = `
       <div class="rng-box">
-        <div class="rng-title">[ ${attrUpper} CHECK ]</div>
-        <div>YOUR ${attribute.toUpperCase()}: ${player_value} | NEEDED: ${threshold} | CHANCE: ${chance}%</div>
+        <div class="rng-title">[ ROLL ]</div>
+        <div>CHANCE: ${chance}%</div>
         <div>ROLLED: ${roll}</div>
         <div class="${resultClass}">${resultText}</div>
       </div>

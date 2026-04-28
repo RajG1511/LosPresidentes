@@ -42,7 +42,7 @@
         {
           "label": "Get Jorge's footage first — intel is power",
           "next_node": "jorge_001",
-          "requirements": { "intelligence": 6 },
+          "requirements": null,
           "effects": { "intelligence": 1 },
           "weight_attribute": null
         }
@@ -87,7 +87,7 @@
           "requirements": null,
           "effects": { "intelligence": 1 },
           "weight_attribute": "intelligence",
-          "threshold": 5
+          "threshold": 7
         },
         {
           "label": "Intimidate him into talking",
@@ -96,7 +96,7 @@
           "requirements": null,
           "effects": { "strength": 1, "rapport": -1 },
           "weight_attribute": "strength",
-          "threshold": 6
+          "threshold": 7
         },
         {
           "label": "Play it smooth — befriend him",
@@ -105,7 +105,7 @@
           "requirements": null,
           "effects": { "rapport": 1 },
           "weight_attribute": "rapport",
-          "threshold": 5
+          "threshold": 7
         }
       ]
     },
@@ -199,7 +199,7 @@
           "requirements": null,
           "effects": { "rapport": 1 },
           "weight_attribute": "rapport",
-          "threshold": 6
+          "threshold": 7
         },
         {
           "label": "Distract him with a technical question about bird taxonomy",
@@ -222,16 +222,16 @@
         {
           "label": "Trust your instincts and go",
           "next_node": "palace_gates",
-          "fail_node": "border_caught",
+          "fail_node": "border_burned",
           "requirements": null,
           "effects": { "stealth": 1 },
           "weight_attribute": "stealth",
-          "threshold": 5
+          "threshold": 7
         },
         {
           "label": "Brace yourself physically — this will be rough",
           "next_node": "palace_gates",
-          "fail_node": "border_caught",
+          "fail_node": "border_burned",
           "requirements": { "strength": 6 },
           "effects": { "strength": 1, "morale": -1 },
           "weight_attribute": null
@@ -300,7 +300,7 @@
           "requirements": null,
           "effects": { "stealth": 1 },
           "weight_attribute": "stealth",
-          "threshold": 5,
+          "threshold": 7,
           "fail_node": "finale_caught"
         },
         {
@@ -308,6 +308,13 @@
           "next_node": "finale_confrontation",
           "requirements": { "strength": 7 },
           "effects": { "strength": 1, "morale": -1 },
+          "weight_attribute": null
+        },
+        {
+          "label": "Follow the trail deeper into the rainforest",
+          "next_node": "rainforest_trail",
+          "requirements": null,
+          "effects": { "intelligence": 1 },
           "weight_attribute": null
         }
       ]
@@ -335,12 +342,19 @@
     "finale_caught": {
       "node_id": "finale_caught",
       "section": "act3",
-      "type": "ending",
-      "text": "A guard's flashlight finds you in the tunnel.\n\nThere's a brief, undignified chase. You make it three floors before soldiers have you surrounded.\n\nDelgado appears personally. He's in a bathrobe. He looks at you for a long time.\n\n'You came all this way for a platypus?'\n\n'Yes,' you say.\n\nHe seems genuinely moved. But he still has you deported.\n\nPete remains in Caracas. For now.\n\n>>> ENDING 3: SO CLOSE",
+      "type": "event",
+      "text": "A guard's flashlight finds you in the tunnel.\n\nYou run. Three flights, a locked door you break through, a window you drop from into the palace garden. You roll, get up, and disappear into the dark before anyone can organize a pursuit.\n\nYou surface two blocks away, soaked and bleeding from the drop. The tunnel route is completely burned.\n\nCarmen is waiting at the edge of the garden wall. She saw you fall. She doesn't look surprised.\n\n'That way is closed now,' she says. 'But there are others.'",
       "mood": "tense",
-      "ending_id": "ending_3",
       "sprite": "ending_caught.png",
-      "choices": []
+      "choices": [
+        {
+          "label": "Catch your breath. Find another way in.",
+          "next_node": "palace_desperate",
+          "requirements": null,
+          "effects": { "stealth": -2, "morale": -1 },
+          "weight_attribute": null
+        }
+      ]
     },
     "finale_confrontation": {
       "node_id": "finale_confrontation",
@@ -350,6 +364,220 @@
       "mood": "triumphant",
       "ending_id": "ending_4",
       "sprite": "ending_standoff.png",
+      "choices": []
+    },
+    "rainforest_trail": {
+      "node_id": "rainforest_trail",
+      "section": "act3",
+      "type": "event",
+      "text": "Something doesn't add up.\n\nCarmen said it quietly, almost to herself: 'He never seems scared. Most animals panic when they're taken. Pete just... watches.'\n\nSupply trucks have been leaving the palace at 2 AM nightly, headed south into the jungle. Not food. Not military equipment. Unmarked crates with no manifest.\n\nYou follow one.\n\nThree hours down a track that shouldn't exist, the jungle closes in and the truck stops at a fortified compound half-swallowed by vegetation. Armed guards. Satellite dishes. A generator hum you can feel in your chest.\n\nDelgado is standing outside the gates. Alone. In the mud. He looks like a man who has not slept in months.",
+      "mood": "mysterious",
+      "sprite": "rainforest_compound.png",
+      "choices": [
+        {
+          "label": "Confront Delgado — he has answers",
+          "next_node": "delgado_not_villain",
+          "requirements": null,
+          "effects": { "intelligence": 1 },
+          "weight_attribute": null
+        }
+      ]
+    },
+    "delgado_not_villain": {
+      "node_id": "delgado_not_villain",
+      "section": "act3",
+      "type": "event",
+      "text": "Delgado grabs your arm before you can speak.\n\n'You need to leave. Right now. You have no idea what you have walked into.'\n\nEl Presidente Maduro Delgado — the man who runs a country — is shaking.\n\n'The platypus came to me,' he whispers. 'Three months ago. His people contacted my people. He needed a safe house. International cover. He said if I helped him, he would leave my country alone.'\n\nHe grips tighter. 'He runs everything. Northern routes. Pacific corridor. Shell companies in Luxembourg. The DEA has hunted El Maestro for eleven years and they don't even know he has a bill.'\n\nYour blood runs cold.\n\n'Pete is El Maestro.'",
+      "mood": "dangerous",
+      "sprite": "delgado_jungle.png",
+      "choices": [
+        {
+          "label": "Push past Delgado. You have to see it for yourself.",
+          "next_node": "pete_revealed",
+          "requirements": null,
+          "effects": { "morale": -1 },
+          "weight_attribute": null
+        }
+      ]
+    },
+    "pete_revealed": {
+      "node_id": "pete_revealed",
+      "section": "act3",
+      "type": "event",
+      "text": "Pete is sitting behind a mahogany desk.\n\nMaps of South American drug routes cover the walls. Banded currency fills the shelves. Twelve men in tailored suits stand at attention. A laptop sits open in front of him, its screen reflected in his small, ancient eyes.\n\nPete sees you.\n\nHe doesn't run. He doesn't flinch. He closes the laptop.\n\nFor a long moment, neither of you moves. Then he picks up a small bell and rings it once. The men in suits file out. The doors close behind them.\n\nJust you and Pete.\n\nHe stands up on his desk — all forty centimeters of him — and spreads his front flippers wide.\n\nIt is, unmistakably, a challenge.",
+      "mood": "dangerous",
+      "sprite": "pete_desk.png",
+      "choices": [
+        {
+          "label": "Step forward",
+          "next_node": "pete_battle_1",
+          "requirements": null,
+          "effects": null,
+          "weight_attribute": null
+        }
+      ]
+    },
+    "pete_battle_1": {
+      "node_id": "pete_battle_1",
+      "section": "act3",
+      "type": "event",
+      "text": "He's off the desk before you blink.\n\nLow, fast, absolutely silent. The venom spur on his hind leg catches the light as he cuts the distance between you. He's done this before. Many times.\n\nYou have about two seconds to establish the terms of this fight.",
+      "mood": "dangerous",
+      "sprite": "pete_battle.png",
+      "choices": [
+        {
+          "label": "Use your size — drive him back hard",
+          "next_node": "pete_battle_2",
+          "requirements": null,
+          "effects": { "strength": 2, "morale": -1 },
+          "weight_attribute": null
+        },
+        {
+          "label": "Stay back and read him — let him come to you",
+          "next_node": "pete_battle_2",
+          "requirements": null,
+          "effects": { "intelligence": 1, "morale": 1 },
+          "weight_attribute": null
+        }
+      ]
+    },
+    "pete_battle_2": {
+      "node_id": "pete_battle_2",
+      "section": "act3",
+      "type": "event",
+      "text": "You're both breathing hard.\n\nPete has a gash across his fur — you landed one hit. You have a bruise forming where the spur grazed your forearm. Not a full strike. Not yet.\n\nHe tilts his head at you. Something that might be respect, or recognition. You can't tell which is worse.\n\nThis is the moment the fight turns.",
+      "mood": "dangerous",
+      "sprite": "pete_battle_2.png",
+      "choices": [
+        {
+          "label": "Commit — end this while you have momentum",
+          "next_node": "pete_battle_3",
+          "requirements": null,
+          "effects": { "strength": 1, "morale": -1 },
+          "weight_attribute": null
+        },
+        {
+          "label": "Call him by his name. Make him hesitate.",
+          "next_node": "pete_battle_3",
+          "requirements": null,
+          "effects": { "rapport": 1 },
+          "weight_attribute": null
+        }
+      ]
+    },
+    "pete_battle_3": {
+      "node_id": "pete_battle_3",
+      "section": "act3",
+      "type": "attribute",
+      "text": "One of you ends this right now.\n\nPete squares up. You square up. The generator hums. Somewhere outside, the jungle is completely indifferent to both of you.\n\nThis is what you came for.",
+      "mood": "dangerous",
+      "sprite": "pete_battle_3.png",
+      "choices": [
+        {
+          "label": "Overpower him — everything you have left",
+          "next_node": "ending_pete_prison",
+          "fail_node": "ending_pete_wins",
+          "requirements": null,
+          "effects": { "strength": 1 },
+          "weight_attribute": "strength",
+          "threshold": 7
+        },
+        {
+          "label": "One last appeal — reach the Pete you knew",
+          "next_node": "ending_pete_prison",
+          "fail_node": "ending_pete_wins",
+          "requirements": null,
+          "effects": { "rapport": 1 },
+          "weight_attribute": "rapport",
+          "threshold": 7
+        }
+      ]
+    },
+    "ending_pete_wins": {
+      "node_id": "ending_pete_wins",
+      "section": "act3",
+      "type": "ending",
+      "text": "The spur finds you before you finish the thought.\n\nYou hit the floor. The ceiling is corrugated steel. You can hear the generator. You can hear the jungle outside.\n\nPete stands over you, breathing hard, watching you with those impossible eyes. He looks exactly the same as the day you brought him home — small, strange, ancient.\n\nYou reach up toward him. Your hand finds his fur one last time.\n\n'I loved you,' you say.\n\nPete looks at you for a long time.\n\nThen he picks up the phone.\n\n>>> ENDING 5: EL MAESTRO",
+      "mood": "tense",
+      "ending_id": "ending_5",
+      "sprite": "ending_pete_wins.png",
+      "choices": []
+    },
+    "ending_pete_prison": {
+      "node_id": "ending_pete_prison",
+      "section": "act3",
+      "type": "ending",
+      "text": "It takes everything you have.\n\nForty centimeters of muscle, venom, and eleven years of cartel discipline against everything you brought from home.\n\nYou win.\n\nPete lies still on the mahogany desk, exhausted. His small chest rises and falls. His eyes find yours and hold them.\n\nYou call the DEA from the satellite phone on his desk. They arrive in forty minutes with seventeen agents and a reinforced transport crate.\n\nYou watch them take him away.\n\nThe lead agent shakes your hand. 'You just ended the most sophisticated narcotics operation in the Western Hemisphere.'\n\nYou don't answer.\n\nOn the flight home, the seat beside you is empty. You keep looking at it.\n\nYou are never quite the same.\n\n>>> ENDING 6: THE WARDEN",
+      "mood": "tense",
+      "ending_id": "ending_6",
+      "sprite": "ending_pete_prison.png",
+      "choices": []
+    },
+    "border_burned": {
+      "node_id": "border_burned",
+      "section": "act2",
+      "type": "attribute",
+      "text": "Your name is in the system now. Your passport photo is flagged at every checkpoint in Venezuela. You've been expelled once, stopped twice, and the coastal patrol has a description that matches you well enough to cause problems.\n\nVargas finds you in a café near the Colombian border. He slides a folder across the table without a word. New documents. Better quality than anything Rosa gave you.\n\n'This is the last thing I can do,' he says. 'After this, you're on your own.'",
+      "mood": "tense",
+      "sprite": "border_burned.png",
+      "choices": [
+        {
+          "label": "Take the documents. One last try.",
+          "next_node": "palace_gates",
+          "fail_node": "ending_persona_non_grata",
+          "requirements": null,
+          "effects": { "intelligence": 1, "stealth": -1 },
+          "weight_attribute": "intelligence",
+          "threshold": 7
+        }
+      ]
+    },
+    "palace_desperate": {
+      "node_id": "palace_desperate",
+      "section": "act3",
+      "type": "attribute",
+      "text": "You're out of clean options.\n\nCarmen leads you to a service entrance — not the tunnels, just a back door near the kitchen staff quarters. Two guards. A narrow gap between patrol rotations.\n\n'I can't help you past this point,' she says. She looks at you like she's memorizing your face. 'Whatever happens, it's been an honor.'\n\nThis is the last play.",
+      "mood": "dangerous",
+      "sprite": "palace_desperate.png",
+      "choices": [
+        {
+          "label": "Go hard — push through before they can react",
+          "next_node": "finale_confrontation",
+          "fail_node": "ending_compromised",
+          "requirements": null,
+          "effects": { "strength": 1, "morale": -1 },
+          "weight_attribute": "strength",
+          "threshold": 7
+        },
+        {
+          "label": "Bluff your way through — you work here now",
+          "next_node": "finale_social",
+          "fail_node": "ending_compromised",
+          "requirements": null,
+          "effects": { "rapport": 1, "morale": -1 },
+          "weight_attribute": "rapport",
+          "threshold": 7
+        }
+      ]
+    },
+    "ending_persona_non_grata": {
+      "node_id": "ending_persona_non_grata",
+      "section": "act3",
+      "type": "ending",
+      "text": "The documents don't hold.\n\nA border agent holds your passport under a UV light for thirty seconds too long, then calls her supervisor. Within an hour you're on a bus back to Colombia with a stamp in your actual passport that reads INELIGIBLE FOR ENTRY.\n\nYou try three more times over the next four months. Each time you get a little further. Each time they turn you back.\n\nPete is still in Caracas. You are not.\n\nYou start writing letters. To the Venezuelan embassy, to the State Department, to three different wildlife protection organizations. None of them write back.\n\nYou keep writing.\n\n>>> ENDING 7: STRONGLY-WORDED LETTERS",
+      "mood": "tense",
+      "ending_id": "ending_7",
+      "sprite": "ending_letters.png",
+      "choices": []
+    },
+    "ending_compromised": {
+      "node_id": "ending_compromised",
+      "section": "act3",
+      "type": "ending",
+      "text": "They have you this time.\n\nNo dramatic escape. No window to drop from. Just two guards with their hands on your arms and a very long walk to a very white room.\n\nDelgado comes himself, an hour later. He looks tired rather than angry.\n\n'I admire the dedication,' he says. 'Truly. But this ends now.'\n\nHis offer is simple: sign a document stating you came to Venezuela voluntarily as a birdwatcher, and you walk free. No charges. No record.\n\nYou look at the document for a long time.\n\nPete is on the third floor. He has no idea you're here.\n\nYou pick up the pen.\n\n>>> ENDING 8: THE SIGNATURE",
+      "mood": "tense",
+      "ending_id": "ending_8",
+      "sprite": "ending_signature.png",
       "choices": []
     },
     "morale_death": {

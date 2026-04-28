@@ -146,10 +146,6 @@ class GameState:
                 if actual_delta != 0:
                     changes.append({"attribute": attr, "delta": actual_delta})
 
-        # Morale death check
-        if not self.player.is_alive():
-            next_id = "morale_death"
-
         # Advance
         self.player.current_node = next_id
         self.player.history.append(next_id)
@@ -190,8 +186,6 @@ class GameState:
                     {
                         "label": c.label,
                         "has_rng": c.weight_attribute is not None,
-                        "weight_attribute": c.weight_attribute,
-                        "threshold": c.threshold,
                     }
                     for c in available
                 ],

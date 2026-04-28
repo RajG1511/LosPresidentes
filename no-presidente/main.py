@@ -25,7 +25,7 @@ MOODS_PATH = os.path.join(os.path.dirname(__file__), "data", "config", "moods.js
 with open(MOODS_PATH, "r", encoding="utf-8") as f:
     MOODS = json.load(f)["moods"]
 
-TOTAL_MAIN_ENDINGS = 5
+TOTAL_MAIN_ENDINGS = 7
 
 
 def c(text, color_code=""):
@@ -94,22 +94,19 @@ def print_choices(choices, mood: str):
     for i, choice in enumerate(choices, 1):
         rng_tag = ""
         if choice.weight_attribute:
-            rng_tag = c(f"  [ROLL: {choice.weight_attribute.upper()}]", Fore.CYAN if HAS_COLOR else "")
+            rng_tag = c(f"  [ROLL]", Fore.CYAN if HAS_COLOR else "")
         print(c(f"  > [{i}] {choice.label}{rng_tag}", col))
     print()
 
 
 def print_rng_result(rng_result: dict):
-    attr = rng_result["attribute"].upper()
-    player_val = rng_result["player_value"]
-    threshold = rng_result["threshold"]
     chance = rng_result["chance"]
     roll = rng_result["roll"]
     success = rng_result["success"]
 
     print()
-    print(c(f"  ⚔ {attr} CHECK", Fore.CYAN if HAS_COLOR else ""))
-    print(c(f"    Your {attr.lower()}: {player_val} | Needed: {threshold} | Chance: {chance}%", Fore.WHITE if HAS_COLOR else ""))
+    print(c(f"  ⚔ ROLL", Fore.CYAN if HAS_COLOR else ""))
+    print(c(f"    Chance: {chance}%", Fore.WHITE if HAS_COLOR else ""))
     print(c(f"    Rolled: {roll}", Fore.WHITE if HAS_COLOR else ""))
     if success:
         print(c("    ✓ SUCCESS", Fore.GREEN + Style.BRIGHT if HAS_COLOR else ""))

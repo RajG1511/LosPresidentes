@@ -139,6 +139,28 @@ def test_ending_tracked(gs):
     assert "ending_1" in gs.player.endings_discovered
 
 
+def test_weighted_choice_failure_routes_to_non_ending_fail_node(gs, monkeypatch):
+    # Force failure on a weighted choice whose fail_node is a non-ending detour.
+    gs.player.current_node = "vargas_001"
+    gs.player.history.append("vargas_001")
+    monkeypatch.setattr("engine.attribute_system.random.randint", lambda a, b: b)
+    node, _, rng = gs.make_choice(0)
+    assert rng is not None
+    assert rng["success"] is False
+    assert node.node_id == "vargas_trap"
+
+
+def test_weighted_choice_failure_does_not_route_to_ending_fail_node(gs, monkeypatch):
+    # Force failure on a weighted choice whose fail_node is an ending path.
+    gs.player.current_node = "carmen_meet"
+    gs.player.history.append("carmen_meet")
+    monkeypatch.setattr("engine.attribute_system.random.randint", lambda a, b: b)
+    node, _, rng = gs.make_choice(0)
+    assert rng is not None
+    assert rng["success"] is False
+    assert node.node_id == "finale_stealth"
+
+
 def test_to_dict_structure(gs):
     d = gs.to_dict()
     assert "player" in d

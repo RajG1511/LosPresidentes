@@ -37,7 +37,7 @@
     }
   },
   "rng": {
-    "base_chance": 35,
+    "base_chance": 65,
     "per_point_modifier": 10,
     "min_chance": 10,
     "max_chance": 95,
