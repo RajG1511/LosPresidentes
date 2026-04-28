@@ -10,6 +10,7 @@ const Terminal = (() => {
 
   let _skipFlag = false;
   let _typingActive = false;
+  let _autoScrollEnabled = true;
 
   // Register skip listeners once
   function _setupSkip() {
@@ -18,8 +19,36 @@ const Terminal = (() => {
     // Only skip on terminal panel clicks, not choice button clicks
     document.getElementById("terminal-panel")?.addEventListener("click", skipHandler);
   }
+
+  function _setupScrollGuard() {
+    const panel = document.getElementById("terminal-panel");
+    if (!panel) return;
+
+    panel.addEventListener("wheel", (e) => {
+      if (e.deltaY < 0) {
+        _autoScrollEnabled = false;
+      }
+    }, { passive: true });
+
+    panel.addEventListener("touchmove", () => {
+      _autoScrollEnabled = false;
+    }, { passive: true });
+
+    panel.addEventListener("scroll", () => {
+      const distanceFromBottom =
+        panel.scrollHeight - panel.scrollTop - panel.clientHeight;
+
+      if (distanceFromBottom < 20) {
+        _autoScrollEnabled = true;
+      }
+    });
+  }
+
   // Call after DOM ready
-  document.addEventListener("DOMContentLoaded", _setupSkip);
+  document.addEventListener("DOMContentLoaded", () => {
+    _setupSkip();
+    _setupScrollGuard();
+  });
 
   /**
    * setSpeed(ms) — set typewriter speed in ms per character
@@ -63,9 +92,26 @@ const Terminal = (() => {
     _scrollTerminal();
   }
 
-  function _scrollTerminal() {
+  function _scrollTerminal(force = false) {
     const panel = document.getElementById("terminal-panel");
-    if (panel) panel.scrollTop = panel.scrollHeight;
+    if (!panel) return;
+
+    if (force) {
+      _autoScrollEnabled = true;
+      panel.scrollTop = panel.scrollHeight;
+      return;
+    }
+
+    if (!_autoScrollEnabled) return;
+
+    const distanceFromBottom =
+      panel.scrollHeight - panel.scrollTop - panel.clientHeight;
+
+    const userIsNearBottom = distanceFromBottom < 80;
+
+    if (userIsNearBottom) {
+      panel.scrollTop = panel.scrollHeight;
+    }
   }
 
   /**
@@ -155,6 +201,8 @@ const Terminal = (() => {
       const el = document.getElementById(id);
       if (el) el.innerHTML ? (el.innerHTML = "") : (el.textContent = "");
     });
+
+    _scrollTerminal(true);
   }
 
   /**
