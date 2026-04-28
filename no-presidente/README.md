@@ -15,6 +15,24 @@ pip install -r requirements.txt
 python app.py
 ```
 
+**Windows (PowerShell)** — If `python` comes from MSYS2 (`C:\msys64\...`), the venv lives under `venv\bin\`, not `venv\Scripts\`. Either activate the right script or call the venv interpreter directly (avoids PEP 668 “externally-managed-environment” when activation fails):
+
+```powershell
+python -m venv venv
+.\venv\bin\Activate.ps1
+python -m pip install -r requirements.txt
+python app.py
+```
+
+If `Activate.ps1` is blocked by execution policy, skip activation and use:
+
+```powershell
+.\venv\bin\python.exe -m pip install -r requirements.txt
+.\venv\bin\python.exe app.py
+```
+
+If you use **python.org** Python instead, the venv uses `venv\Scripts\` and `.\venv\Scripts\Activate.ps1`.
+
 Open http://localhost:5000 in your browser.
 
 ---
@@ -36,11 +54,14 @@ Great for testing the engine quickly.
 python tools/validate_routes.py
 ```
 
-**Visualize the story graph:**
+**Visualize the story graph** (install tool deps first — they are not required to run the game):
 ```bash
+pip install -r requirements-tools.txt
 python tools/visualize_graph.py
 # Outputs: tools/graph.png
 ```
+
+On **MSYS2 Python 3.14**, matplotlib may not have prebuilt wheels; use **python.org** Python for `requirements-tools.txt`, or install graph deps only when you need that script.
 
 ---
 
@@ -59,6 +80,7 @@ no-presidente/
 ├── app.py                  Flask server (API + frontend)
 ├── main.py                 Terminal game loop
 ├── requirements.txt
+├── requirements-tools.txt  Optional: graph viz (networkx, matplotlib)
 ├── engine/
 │   ├── node_engine.py      StoryNode, Choice, StoryGraph
 │   ├── game_state.py       Player, GameState
