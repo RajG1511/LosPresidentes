@@ -71,15 +71,17 @@ const AudioManager = (() => {
    */
   function playMoodTrack(mood) {
     if (_muted) { _currentMood = mood; return; }
-    if (mood === _currentMood) return;
+    // Same mood already audible — skip (avoid restart spam).
+    // If we only stored mood before the first user gesture, the track is not playing yet; must not return here.
+    if (mood === _currentMood && _tracks[mood]?.playing()) return;
 
     const prev = _currentMood;
     _currentMood = mood;
 
     if (!_firstInteraction) return;   // will be called on first interaction
 
-    // Fade out current
-    if (prev && _tracks[prev]) {
+    // Fade out previous *different* track if it is actually playing
+    if (prev && prev !== mood && _tracks[prev]?.playing()) {
       const old = _tracks[prev];
       old.fade(old.volume(), 0, 2000);
       setTimeout(() => old.pause(), 2100);
